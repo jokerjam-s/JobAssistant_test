@@ -1,13 +1,11 @@
 package gb.jobassistant;
 
-import gb.jobassistant.ui.UserInterfaceImpl;
+import gb.jobassistant.controller.JobAssistantController;
 
 public class Main {
     public static void main(String[] args) {
-        UserInterfaceImpl ui = new UserInterfaceImpl();
+        JobAssistantController controller = new JobAssistantController();
 
-        Double dd = ui.getDoubleConsole("Оклад: ");
-
-        System.out.println(dd);
+        controller.Run();
     }
 }

@@ -1,11 +1,46 @@
 package gb.jobassistant.ui;
 
+import gb.jobassistant.data.JobInfo;
+import gb.jobassistant.data.JobKind;
+
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserInterfaceImpl implements UserInterface {
+public class UserInterfaceImpl implements UserInterface<JobInfo> {
     public UserInterfaceImpl() {
+    }
+
+    /**
+     * Вывод списка на консоль
+     *
+     * @param list - список для отображения
+     */
+    public void printList(List<JobInfo> list) {
+        for (JobInfo s : list){
+            System.out.println(s.toString());
+        }
+    }
+
+    /**
+     * Запрос информации о вакансии у пользователя
+     * @return  - JobKind на основе введенных данных
+     */
+    public JobInfo askData(){
+        String name = this.getStringConsole("Наименование вакансии: ");
+        String skills = this.getStringConsole("Навыки: ");
+        String text = this.getStringConsole("Описание: ");
+        Double summa = this.getDoubleConsole("Зарплата: ");
+        int kind = this.getIntegerConsole("Вид (1-удаленноб 2-офис, 3-смешанный): ") - 1;
+
+        JobKind jobKind;
+        switch (kind){
+            case 0 -> jobKind = JobKind.REMOTE;
+            case 1 -> jobKind = JobKind.OFFICE;
+            default -> jobKind = JobKind.MIXED;
+        }
+
+        return new JobInfo(name, skills, text, summa, jobKind);
     }
 
     /**
@@ -15,7 +50,7 @@ public class UserInterfaceImpl implements UserInterface {
      * @return
      */
     @Override
-    public int showMenu(List<String> menuList) {
+    public int showMenu(String[] menuList) {
         int menu = 1;
 
         for (String s: menuList){
@@ -23,7 +58,7 @@ public class UserInterfaceImpl implements UserInterface {
         }
 
         menu = getIntegerConsole("> ");
-        menu = (menu < 0 || menu >= menuList.size()) ? 0 : menu;
+        menu = (menu < 0 || menu >= menuList.length) ? 0 : menu;
 
         return menu;
     }
@@ -61,6 +96,7 @@ public class UserInterfaceImpl implements UserInterface {
     @Override
     public String getStringConsole(String message) {
         Scanner scanner = new Scanner(System.in);
+        System.out.print(message);
         return scanner.nextLine();
     }
 
@@ -86,6 +122,5 @@ public class UserInterfaceImpl implements UserInterface {
             }
         }
         return value;
-
     }
 }

@@ -2,13 +2,20 @@ package gb.jobassistant.ui;
 
 import java.util.List;
 
-public interface UserInterface {
+public interface UserInterface <E>  {
+    /**
+     * Вывод списка на консоль
+     *
+     * @param list - список для отображения
+     */
+    void printList(List<E> list);
+
     /**
      * Вывод пользовательского меню
      * @param menuList  - список пунктов для отображения
      * @return
      */
-    int showMenu(List<String> menuList);
+    int showMenu(String[] menuList);
 
     /**
      * Запрос вещественных числовых данных,
@@ -30,4 +37,5 @@ public interface UserInterface {
      * @return
      */
     int getIntegerConsole(String message);
+
 }

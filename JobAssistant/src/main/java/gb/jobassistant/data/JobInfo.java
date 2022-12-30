@@ -4,19 +4,47 @@ package gb.jobassistant.data;
  * Описание рабочей вакансии
  */
 public class JobInfo {
+    private Integer id;
     private String name;
     private String skills;
     private String text;
     private Double summa;
     private JobKind jobKind;
 
+    public JobInfo() {
+    }
 
     public JobInfo(String name, String skills, String text, Double summa, JobKind jobKind) {
+        this.id = 0;
         this.name = name;
         this.skills = skills;
         this.text = text;
         this.summa = summa;
         this.jobKind = jobKind;
+    }
+
+    @Override
+    public String toString() {
+        String kind;
+
+        switch (jobKind){
+            case REMOTE -> kind = "удаленно";
+            case OFFICE -> kind = "офис";
+            default -> kind = "смешанный";
+        }
+
+        return String.format(
+                "%5d | %10s | %20s | %20s | %8.2f | %s",
+                id, name, skills, text, summa, kind
+        );
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
